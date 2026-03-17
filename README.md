@@ -21,7 +21,7 @@ Make sure you have the following installed:
 
 ### 2. Clone the Repository
 ```bash
-git clone https://github.com/Emirhan019/savtekv3.git
+git clone https://github.com/savtekv3/linkflow.git
 cd savtekv3
 ```
 
