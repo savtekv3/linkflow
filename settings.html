@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Account Settings - LinkTracker</title>
+<!-- Tailwind CSS CDN with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#0a0f1d',
+                            800: '#111827',
+                            700: '#1f2937',
+                        },
+                        charcoal: {
+                            900: '#121212',
+                            800: '#1e1e1e',
+                            700: '#2d2d2d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="typography">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 font-sans text-slate-200 h-screen flex overflow-hidden">
+
+<!-- BEGIN: MainContent -->
+<!-- BEGIN: Sidebar Navigation -->
+<aside class="w-64 bg-slate-900 text-white flex flex-col shrink-0 border-r border-slate-800" data-purpose="main-sidebar">
+<div class="p-6 flex items-center gap-3 border-b border-slate-800">
+<div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
+<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<span class="font-bold text-xl tracking-tight">LinkTrack</span>
+</div>
+<nav class="flex-1 overflow-y-auto py-6" data-purpose="sidebar-nav">
+<ul class="space-y-1 px-4">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-md transition-colors" href="dashboard.html">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16m-7 6h7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="font-medium">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-md transition-colors" href="analytics.html">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Analytics</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 bg-blue-600 text-white rounded-md transition-colors" href="settings.html">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<div class="p-4 border-t border-slate-800">
+<div class="flex items-center gap-3">
+<img alt="User Profile" class="w-10 h-10 rounded-full border border-slate-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ_ytpoyeB59Gm4xj8vrHALUOHc_spOv4je5jIhEB3j3i7tvyVZgdNygoLC9R71dqRobH53M8ZTgsfju5GokMxVR0SHc0hwMxiJC37HMyyu4SAGpUje1oIZSpOXJuZ-Nw8aSqg8zfxtuLeGjIQYpA5nKV5MZqPkeRPuNdrFePSLKRoQq6p8cf958zafzazgEL8WMdI1MImalgV8Jw2zYkVyTevYpdjWeNUitcRNXo9CHWa3OUAEpZ_15GYifGIDsn-IXUpYg-pdpKq"/>
+<div class="overflow-hidden">
+<p class="text-sm font-semibold truncate text-slate-100">Alex Rivera</p>
+<p class="text-xs text-slate-400 truncate">alex@example.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- END: Sidebar Navigation -->
+<!-- BEGIN: Main Dashboard Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden">
+<header class="bg-slate-900 h-16 shrink-0 border-b border-slate-800 flex items-center justify-between px-8" data-purpose="top-header">
+<div>
+<h1 class="text-xl font-bold text-slate-100">Settings</h1>
+<p class="text-xs text-slate-400">Manage your account and preferences</p>
+</div>
+</header>
+<section class="flex-1 overflow-auto p-8" data-purpose="main-table-container">
+<div class="max-w-4xl mx-auto">
+
+<!-- BEGIN: SettingsTitle -->
+<div class="mb-8">
+<h1 class="text-2xl font-bold text-white">Account Settings</h1>
+<p class="text-slate-400 mt-1">Manage your account preferences and security settings.</p>
+</div>
+<!-- END: SettingsTitle -->
+<div class="space-y-8">
+<!-- BEGIN: ProfileAvatarSection -->
+<section class="bg-slate-900 rounded-xl border border-slate-800 shadow-xl overflow-hidden" data-purpose="profile-section">
+<div class="p-6">
+<h2 class="text-lg font-semibold text-white mb-4">Profile Photo</h2>
+<div class="flex flex-col sm:flex-row items-center gap-6">
+<div class="relative group">
+<img alt="Profile" class="w-24 h-24 rounded-full object-cover ring-4 ring-slate-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs1oqz5ZOGrwUAv3DoKoi6pJCfczfIj7cKCL7xqtMciXaQ28g6Y5SsMMhfio8-AN8IRjGkGW6YdgG5Kt7drOB_avC_WX_CjZpl3Nqq5KUq98WiVjdCOj_t3Ou_Cs_0xztdygY-a3r876Go1S1p6JGUEt9xWwlbBZast6vIrReuAPe8-RMReeL27ErKjxD7iIAnBa-UUU3nQ9vYAcctuOr3AAojl5be5DDwLnCRp1lHJZb248tFMWMry-7H5A9FlCtZHg3UNTGfweW5"/>
+<button class="absolute bottom-0 right-0 bg-slate-800 p-1.5 rounded-full border border-slate-700 shadow-sm hover:bg-slate-700 text-blue-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<div class="text-center sm:text-left">
+<button class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                            Upload New Image
+                        </button>
+<p class="text-xs text-slate-500 mt-2">JPG, GIF or PNG. Max size 2MB.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: ProfileAvatarSection -->
+<!-- BEGIN: EmailSettingsSection -->
+<section class="bg-slate-900 rounded-xl border border-slate-800 shadow-xl overflow-hidden" data-purpose="email-form">
+<div class="p-6 border-b border-slate-800">
+<h2 class="text-lg font-semibold text-white">Email Address</h2>
+<p class="text-sm text-slate-400">Update your email address used for login and notifications.</p>
+</div>
+<form class="p-6">
+<div class="max-w-md space-y-4">
+<div data-purpose="form-field">
+<label class="block text-sm font-medium text-slate-300 mb-1" for="email">Email Address</label>
+<input class="w-full bg-slate-800 border-slate-700 text-slate-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 shadow-sm transition-colors" id="email" name="email" placeholder="your@email.com" type="email" value="alex.walker@example.com"/>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-800 flex justify-end">
+<button class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-all shadow-sm hover:shadow-md" type="submit">
+                        Save Email Changes
+                    </button>
+</div>
+</form>
+</section>
+<!-- END: EmailSettingsSection -->
+<!-- BEGIN: PasswordSecuritySection -->
+<section class="bg-slate-900 rounded-xl border border-slate-800 shadow-xl overflow-hidden" data-purpose="password-form">
+<div class="p-6 border-b border-slate-800">
+<h2 class="text-lg font-semibold text-white">Change Password</h2>
+<p class="text-sm text-slate-400">Secure your account by updating your password regularly.</p>
+</div>
+<form class="p-6">
+<div class="max-w-md space-y-6">
+<div data-purpose="form-field">
+<label class="block text-sm font-medium text-slate-300 mb-1" for="current-password">Current Password</label>
+<input class="w-full bg-slate-800 border-slate-700 text-slate-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 shadow-sm" id="current-password" name="current-password" placeholder="••••••••" type="password"/>
+</div>
+<div data-purpose="form-field">
+<label class="block text-sm font-medium text-slate-300 mb-1" for="new-password">New Password</label>
+<input class="w-full bg-slate-800 border-slate-700 text-slate-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 shadow-sm" id="new-password" name="new-password" placeholder="••••••••" type="password"/>
+<p class="text-xs text-slate-500 mt-2">Minimum 8 characters with a mix of letters, numbers &amp; symbols.</p>
+</div>
+<div data-purpose="form-field">
+<label class="block text-sm font-medium text-slate-300 mb-1" for="confirm-password">Confirm New Password</label>
+<input class="w-full bg-slate-800 border-slate-700 text-slate-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 shadow-sm" id="confirm-password" name="confirm-password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-800 flex justify-end">
+<button class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-all shadow-sm hover:shadow-md" type="submit">
+                        Update Password
+                    </button>
+</div>
+</form>
+</section>
+<!-- END: PasswordSecuritySection -->
+<!-- BEGIN: DangerZoneSection -->
+<section class="bg-red-900/10 rounded-xl border border-red-900/20 overflow-hidden" data-purpose="danger-zone">
+<div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="text-lg font-semibold text-red-400">Delete Account</h2>
+<p class="text-sm text-red-300/70">Permanently remove your account and all tracked link data. This action is irreversible.</p>
+</div>
+<button class="bg-red-600 hover:bg-red-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
+                    Delete Account
+                </button>
+</div>
+</section>
+<!-- END: DangerZoneSection -->
+</div>
+
+</div>
+</section>
+</main>
+<!-- END: Main Dashboard Content -->
+<!-- END: MainContent -->
+
+</body></html>
