@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 
 <html lang="en"><head>
+<meta charset="UTF-8">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>LinkAnalytics - Insight Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <!-- Tailwind CSS v3 with Plugins -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <!-- Chart.js for the analytics graph -->
@@ -89,12 +91,16 @@
 </li>
 </ul>
 </nav>
-<div class="p-4 border-t border-slate-800">
+<div class="p-4 border-t border-slate-800 flex flex-col gap-3 relative">
+<button id="sidebar-open-plans-btn" class="self-start text-xs font-semibold px-2 py-1 rounded bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 border border-blue-500/20 transition-colors flex items-center gap-1 group">
+  <svg class="w-3 h-3 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+  Plan: <span id="sidebar-user-plan" class="text-white ml-1">Loading</span>
+</button>
 <div class="flex items-center gap-3">
 <img alt="User Profile" class="w-10 h-10 rounded-full border border-slate-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ_ytpoyeB59Gm4xj8vrHALUOHc_spOv4je5jIhEB3j3i7tvyVZgdNygoLC9R71dqRobH53M8ZTgsfju5GokMxVR0SHc0hwMxiJC37HMyyu4SAGpUje1oIZSpOXJuZ-Nw8aSqg8zfxtuLeGjIQYpA5nKV5MZqPkeRPuNdrFePSLKRoQq6p8cf958zafzazgEL8WMdI1MImalgV8Jw2zYkVyTevYpdjWeNUitcRNXo9CHWa3OUAEpZ_15GYifGIDsn-IXUpYg-pdpKq"/>
 <div class="overflow-hidden">
-<p class="text-sm font-semibold truncate text-slate-100">Alex Rivera</p>
-<p class="text-xs text-slate-400 truncate">alex@example.com</p>
+<p id="sidebar-user-name" class="text-sm font-semibold truncate text-slate-100">Alex Rivera</p>
+<p id="sidebar-user-email" class="text-xs text-slate-400 truncate">alex@example.com</p>
 </div>
 </div>
 </div>
@@ -108,31 +114,42 @@
 <p class="text-xs text-slate-400">Detailed performance metrics for your links</p>
 </div>
 </header>
-<section class="flex-1 overflow-auto p-8" data-purpose="main-table-container">
+<section class="flex-1 overflow-auto p-8 relative" data-purpose="main-table-container">
+
+<!-- Premium Overlay -->
+<div id="premium-overlay" class="hidden absolute inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/40 backdrop-blur-sm">
+    <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl text-center max-w-md mx-4 mt-20">
+        <div class="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="w-8 h-8 text-blue-400" data-lucide="lock"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-2">Pro Analytics Required</h2>
+        <p class="text-slate-400 mb-6">Upgrade your plan to pro/Elite for analytics!</p>
+        <button class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg shadow-blue-500/20 transition-all font-medium">Buy plan</button>
+    </div>
+</div>
+
+<div id="analytics-content-wrapper" class="transition-all duration-500">
 
 <!-- BEGIN: Top Metrics -->
-<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" data-purpose="metrics-summary">
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8" data-purpose="metrics-summary">
 <!-- Metric Card: Total Clicks -->
 <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 hover:border-blue-500/50 transition-all">
 <div class="flex justify-between items-start mb-4">
 <div class="p-2 bg-blue-500/10 rounded-lg">
 <i class="w-5 h-5 text-blue-400" data-lucide="mouse-pointer-click"></i>
 </div>
-<span class="text-emerald-400 text-xs font-semibold bg-emerald-400/10 px-2 py-1 rounded">+12.5%</span>
 </div>
 <h3 class="text-slate-400 text-sm font-medium">Total Clicks</h3>
-<p class="text-2xl font-bold text-white mt-1">48,294</p>
+<p id="metric-total-clicks" class="text-2xl font-bold text-white mt-1">...</p>
 </div>
-<!-- Metric Card: Unique Visitors -->
 <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 hover:border-blue-500/50 transition-all">
 <div class="flex justify-between items-start mb-4">
 <div class="p-2 bg-cyan-500/10 rounded-lg">
-<i class="w-5 h-5 text-blue-400" data-lucide="users"></i>
+<i class="w-5 h-5 text-blue-400" data-lucide="link"></i>
 </div>
-<span class="text-emerald-400 text-xs font-semibold bg-emerald-400/10 px-2 py-1 rounded">+5.2%</span>
 </div>
-<h3 class="text-slate-400 text-sm font-medium">Unique Visitors</h3>
-<p class="text-2xl font-bold text-white mt-1">12,803</p>
+<h3 class="text-slate-400 text-sm font-medium">Tracked Links</h3>
+<p id="metric-tracked-links" class="text-2xl font-bold text-white mt-1">...</p>
 </div>
 <!-- Metric Card: Top Performing Link -->
 <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 hover:border-blue-500/50 transition-all">
@@ -142,17 +159,7 @@
 </div>
 </div>
 <h3 class="text-slate-400 text-sm font-medium">Top Link</h3>
-<p class="text-xl font-bold text-white mt-1 truncate">lnky.ai/summer-sale</p>
-</div>
-<!-- Metric Card: Avg Response Time -->
-<div class="bg-slate-900 p-6 rounded-xl border border-slate-800 hover:border-blue-500/50 transition-all">
-<div class="flex justify-between items-start mb-4">
-<div class="p-2 bg-orange-500/10 rounded-lg">
-<i class="w-5 h-5 text-orange-400" data-lucide="zap"></i>
-</div>
-</div>
-<h3 class="text-slate-400 text-sm font-medium">Avg. Response</h3>
-<p class="text-2xl font-bold text-white mt-1">24ms</p>
+<p id="metric-top-link" class="text-xl font-bold text-white mt-1 truncate">...</p>
 </div>
 </section>
 <!-- END: Top Metrics -->
@@ -178,46 +185,8 @@
 <!-- BEGIN: Geographic Distribution -->
 <section class="bg-slate-900 rounded-xl border border-slate-800 p-6" data-purpose="geographic-data">
 <h2 class="text-lg font-semibold text-white mb-4">Geographic Distribution</h2>
-<div class="space-y-4">
-<!-- Country Progress Items -->
-<div class="space-y-1">
-<div class="flex justify-between text-sm">
-<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-cyan-400"></span> United States</span>
-<span class="text-slate-400">42%</span>
-</div>
-<div class="w-full bg-slate-950 rounded-full h-1.5">
-<div class="bg-cyan-500 h-1.5 rounded-full" style="width: 42%"></div>
-</div>
-</div>
-<div class="space-y-1">
-<div class="flex justify-between text-sm">
-<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-purple-400"></span> United Kingdom</span>
-<span class="text-slate-400">18%</span>
-</div>
-<div class="w-full bg-slate-950 rounded-full h-1.5">
-<div class="bg-purple-500 h-1.5 rounded-full" style="width: 18%"></div>
-</div>
-</div>
-<div class="space-y-1">
-<div class="flex justify-between text-sm">
-<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Germany</span>
-<span class="text-slate-400">12%</span>
-</div>
-<div class="w-full bg-slate-950 rounded-full h-1.5">
-<div class="bg-emerald-500 h-1.5 rounded-full" style="width: 12%"></div>
-</div>
-</div>
-<div class="space-y-1">
-<div class="flex justify-between text-sm">
-<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400"></span> Canada</span>
-<span class="text-slate-400">9%</span>
-</div>
-<div class="w-full bg-slate-950 rounded-full h-1.5">
-<div class="bg-orange-500 h-1.5 rounded-full" style="width: 9%"></div>
-</div>
-</div>
-<div class="mt-8 pt-6 border-t border-slate-800 text-center">
-<button class="text-blue-400 text-sm font-medium hover:underline">View Full Map Report</button>
+<div id="geographic-distribution-container" class="space-y-4">
+    <p class="text-sm text-slate-500 text-center py-4">Loading map data...</p>
 </div>
 </div>
 </section>
@@ -225,64 +194,19 @@
 <!-- BEGIN: Referrers List -->
 <section class="lg:col-span-3 bg-slate-900 rounded-xl border border-slate-800 p-6" data-purpose="referrers-traffic">
 <div class="flex items-center justify-between mb-6">
-<h2 class="text-lg font-semibold text-white">Top Referrers</h2>
-<button class="text-sm text-slate-400 hover:text-white transition-colors">Export CSV</button>
+<h2 class="text-lg font-semibold text-white">Device Distribution</h2>
 </div>
 <div class="overflow-x-auto">
 <table class="w-full text-left">
 <thead class="text-xs text-slate-500 uppercase border-b border-slate-800">
 <tr>
-<th class="pb-3 font-medium">Source</th>
-<th class="pb-3 font-medium">Channel</th>
-<th class="pb-3 font-medium">Clicks</th>
-<th class="pb-3 font-medium text-right">Conv. Rate</th>
+<th class="pb-3 font-medium">Device Type</th>
+<th class="pb-3 font-medium">Recorded Clicks</th>
+<th class="pb-3 font-medium text-right">Traffic Share</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-brand-border">
-<tr class="group hover:bg-white/5 transition-colors">
-<td class="py-4">
-<div class="flex items-center gap-3">
-<img alt="Twitter" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeZxDJWzF0rSANdr_wG6sKJaCryjUTsHwDCyOQ-tSB71VK3M0JZ6dDEtHqDPMO13k2Y3JQrdPCU5DldB-rwA_6NwOKykhLa3MVGEjZTw7vRaghMglfj7cHuOyLm42lRmu_hRKGuzFUhBSdCocm6GmEtnskQsZGeSS5IewOQHoZS7P4oa6CVgtyzrUyjsUhUbbQ9UhoB7X6apjUb9B8lrfhXD39cD4VOEeOvgnZRp9Xp-h-0wfJ83zGmRpxh3TaCAJbp-8bIHXFD4Oq"/>
-<span class="text-sm font-medium text-slate-200">Twitter.com</span>
-</div>
-</td>
-<td class="py-4"><span class="px-2 py-1 bg-blue-500/10 text-blue-400 rounded text-xs">Social</span></td>
-<td class="py-4 text-sm font-medium">12,402</td>
-<td class="py-4 text-sm text-right text-emerald-400">3.2%</td>
-</tr>
-<tr class="group hover:bg-white/5 transition-colors">
-<td class="py-4">
-<div class="flex items-center gap-3">
-<img alt="LinkedIn" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVojAWAhERf9A1oB7zRevRDPNrHlgZnCq95AFZtI0gM1CErWgkkVpeirE2nPDsGKDnyUrY01RvNGdz0LqqXvL6a1zXT3VEgCVnpd_Ezff4h-gtEYvCmZ-ifTxgQL3KThdx3JFro-_cfqXrhX3UyY_aB3p0BgJfOeGx4yHCMlrKt4WfSvExt3brRBGFLNdkLV-jjfMpPxzapS5VKzoc8tIrkoTI2vk8YBjrhioW2sT6DYBzya1tBELQTc0Xp3eoiIml_nvsqyaixpYu"/>
-<span class="text-sm font-medium text-slate-200">LinkedIn.com</span>
-</div>
-</td>
-<td class="py-4"><span class="px-2 py-1 bg-blue-500/10 text-blue-400 rounded text-xs">Social</span></td>
-<td class="py-4 text-sm font-medium">8,190</td>
-<td class="py-4 text-sm text-right text-emerald-400">2.8%</td>
-</tr>
-<tr class="group hover:bg-white/5 transition-colors">
-<td class="py-4">
-<div class="flex items-center gap-3">
-<img alt="Google" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPCBkx6MrpYTiizpzCMs_ZNN_Rz36zxRflFZRjGPeo1c6vPqM_-ChERf9CvTZfhyBbzlotGRJlZMEKdLO6y4whr1tZiS5Evhs_KqX8D7J1QD5kfce-k6_Hz5VCorPL51jeSrpdpFfh83zmR_SjjuE6iQpuPtR2hXxzNs5VOVRS4_VeZHyUG0AcdX4Qw8T8LtlogcgXgF2Beb3JGtmoUTSy-bAEQGCdUoG257qvNfFoX9BP_EH5bhBSU85Ug265ukC68dF6xnZexHXI"/>
-<span class="text-sm font-medium text-slate-200">Google Search</span>
-</div>
-</td>
-<td class="py-4"><span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 rounded text-xs">Organic</span></td>
-<td class="py-4 text-sm font-medium">5,411</td>
-<td class="py-4 text-sm text-right text-emerald-400">4.1%</td>
-</tr>
-<tr class="group hover:bg-white/5 transition-colors">
-<td class="py-4">
-<div class="flex items-center gap-3">
-<img alt="Direct" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAiOfJyhD4npwc4rVPDYRYOD4yFXniZ4G2cWnfA3HY6GE9hKzmGMdOc458OSiadLGF_mUYvJJ6po3d-9iYZvIGLALHn3AszsHu3bw_Nfg2CkbCehHNVH75HFN7HJOcofQsrUttypGQVrQ6TZ8VbDkIes0cxOzsb_MtK0L2dUT0iDxEv_4uscyQcZhDN6nIq_vcnTdUrnWazB55Tzkn2Kw9CHDkfXqm2Hr7zLQruKaudAIUBFyAiJIlIJBeC8Vm1AwXxQsKwTTfkRnV"/>
-<span class="text-sm font-medium text-slate-200">Direct / None</span>
-</div>
-</td>
-<td class="py-4"><span class="px-2 py-1 bg-slate-500/10 text-slate-400 rounded text-xs">Direct</span></td>
-<td class="py-4 text-sm font-medium">3,204</td>
-<td class="py-4 text-sm text-right text-emerald-400">5.5%</td>
-</tr>
+<tbody id="device-distribution-tbody" class="divide-y divide-brand-border">
+    <tr><td colspan="3" class="py-4 text-center text-sm text-slate-500">Loading devices...</td></tr>
 </tbody>
 </table>
 </div>
@@ -290,6 +214,7 @@
 <!-- END: Referrers List -->
 </div>
 
+</div>
 </section>
 </main>
 <!-- END: Main Dashboard Content -->
@@ -299,80 +224,264 @@
     lucide.createIcons();
   </script>
 <script data-purpose="charts-init">
-    // Clicks History Chart Initialization
-    const ctx = document.getElementById('clicksChart').getContext('2d');
-    
-    // Gradient for the chart area
-    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, 'rgba(34, 211, 238, 0.3)');
-    gradient.addColorStop(1, 'rgba(34, 211, 238, 0)');
+    document.addEventListener('DOMContentLoaded', async () => {
+        const token = localStorage.getItem('token');
+        if (!token) return;
 
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Jan 12', 'Jan 13', 'Jan 14', 'Jan 15', 'Jan 16', 'Jan 17', 'Jan 18', 'Jan 19', 'Jan 20', 'Jan 21', 'Jan 22', 'Jan 23', 'Jan 24', 'Jan 25'],
-        datasets: [{
-          label: 'Link Clicks',
-          data: [2100, 2400, 2200, 3100, 3400, 3200, 3800, 3600, 4200, 4800, 4500, 5100, 5400, 4900],
-          fill: true,
-          backgroundColor: gradient,
-          borderColor: '#3b82f6',
-          borderWidth: 3,
-          tension: 0.4,
-          pointRadius: 0,
-          pointHoverRadius: 6,
-          pointHoverBackgroundColor: '#3b82f6',
-          pointHoverBorderColor: '#fff',
-          pointHoverBorderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: false,
-            backgroundColor: '#1e293b',
-            titleColor: '#94a3b8',
-            bodyColor: '#fff',
-            borderColor: '#334155',
-            borderWidth: 1,
-            padding: 10,
-            displayColors: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              color: '#1e293b',
-              drawBorder: false
-            },
-            ticks: {
-              color: '#64748b',
-              callback: function(value) {
-                return value >= 1000 ? (value / 1000) + 'k' : value;
-              }
+        try {
+            const res = await fetch('http://localhost:3000/api/links/analytics', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await res.json();
+            
+            if (res.status === 403 && data.isPremium === false) {
+                // Display the paywall overlay and blur the content
+                document.getElementById('premium-overlay').classList.remove('hidden');
+                document.getElementById('analytics-content-wrapper').classList.add('blur-md', 'pointer-events-none', 'select-none', 'opacity-60');
+                
+                // Inject fake randomized data to look cool under the blur
+                data.totalClicks = Math.floor(Math.random() * 50000) + 10000;
+                data.totalLinks = Math.floor(Math.random() * 500) + 50;
+                data.topLink = { name: 'Hidden Data', url: 'https://upgrade.to.see', short_code: 'pro' };
+                
+                data.clicksByDate = Array.from({length: 14}).map((_, i) => ({
+                    date_val: new Date(Date.now() - (13 - i) * 86400000).toISOString(),
+                    count: Math.floor(Math.random() * 1000) + 200
+                }));
+
+                data.clicksByCountry = [
+                    { country: 'United States', count: Math.floor(data.totalClicks * 0.4) },
+                    { country: 'United Kingdom', count: Math.floor(data.totalClicks * 0.2) },
+                    { country: 'Germany', count: Math.floor(data.totalClicks * 0.15) }
+                ];
+
+                data.clicksByDevice = [
+                    { device_type: 'Mobile', count: Math.floor(data.totalClicks * 0.6) },
+                    { device_type: 'Desktop', count: Math.floor(data.totalClicks * 0.4) }
+                ];
+            } else if (!res.ok) {
+                throw new Error(data.error);
             }
-          },
-          x: {
-            grid: {
-              display: false
-            },
-            ticks: {
-              color: '#64748b',
-              maxRotation: 0,
-              autoSkip: true,
-              maxTicksLimit: 7
+
+            // 1. Update Top Metrics
+            document.getElementById('metric-total-clicks').textContent = data.totalClicks.toLocaleString();
+            document.getElementById('metric-tracked-links').textContent = data.totalLinks.toLocaleString();
+            if (data.topLink) {
+                document.getElementById('metric-top-link').textContent = data.topLink.name || 'lnkt.rk/' + data.topLink.short_code;
+                document.getElementById('metric-top-link').title = data.topLink.url;
+            } else {
+                document.getElementById('metric-top-link').textContent = 'None yet';
             }
-          }
+
+            // 2. Initialize the Geographic Distribution Chart
+            const geoContainer = document.getElementById('geographic-distribution-container');
+            geoContainer.innerHTML = '';
+            
+            if (!data.clicksByCountry || data.clicksByCountry.length === 0) {
+                geoContainer.innerHTML = '<p class="text-slate-500 text-sm py-2">No geographic data available.</p>';
+            } else {
+                const totalClicks = data.totalClicks || 1; // avoid div by 0
+                const colors = ['bg-cyan-500', 'bg-purple-500', 'bg-emerald-500', 'bg-orange-500', 'bg-blue-500'];
+                const dotColors = ['bg-cyan-400', 'bg-purple-400', 'bg-emerald-400', 'bg-orange-400', 'bg-blue-400'];
+
+                data.clicksByCountry.forEach((item, idx) => {
+                    const pct = Math.round((item.count / totalClicks) * 100);
+                    const color = colors[idx % colors.length];
+                    const dotColor = dotColors[idx % dotColors.length];
+                    geoContainer.innerHTML += `
+                        <div class="space-y-1">
+                        <div class="flex justify-between text-sm">
+                        <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full ${dotColor}"></span> ${item.country}</span>
+                        <span class="text-slate-400">${pct}% (${item.count})</span>
+                        </div>
+                        <div class="w-full bg-slate-950 rounded-full h-1.5">
+                        <div class="${color} h-1.5 rounded-full" style="width: ${pct}%"></div>
+                        </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // 3. Initialize Device Distribution Table
+            const deviceTbody = document.getElementById('device-distribution-tbody');
+            deviceTbody.innerHTML = '';
+            if (!data.clicksByDevice || data.clicksByDevice.length === 0) {
+                deviceTbody.innerHTML = '<tr><td colspan="3" class="py-4 text-center text-sm text-slate-500">No device data available.</td></tr>';
+            } else {
+                data.clicksByDevice.forEach(item => {
+                    const iconObj = item.device_type === 'Mobile' ? 'smartphone' : 'monitor';
+                    const pct = ((item.count / data.totalClicks) * 100).toFixed(1);
+                    
+                    const tr = document.createElement('tr');
+                    tr.className = 'group hover:bg-white/5 transition-colors';
+                    tr.innerHTML = `
+                        <td class="py-4">
+                        <div class="flex items-center gap-3">
+                        <div class="p-2 bg-slate-800 rounded text-slate-300"><i class="w-4 h-4" data-lucide="${iconObj}"></i></div>
+                        <span class="text-sm font-medium text-slate-200">${item.device_type}</span>
+                        </div>
+                        </td>
+                        <td class="py-4 text-sm font-medium">${item.count.toLocaleString()}</td>
+                        <td class="py-4 text-sm text-right text-emerald-400">${pct}%</td>
+                    `;
+                    deviceTbody.appendChild(tr);
+                });
+                lucide.createIcons(); // refresh dynamically added icons
+            }
+
+            // 4. Update the Line Chart
+            const ctx = document.getElementById('clicksChart').getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(34, 211, 238, 0.3)');
+            gradient.addColorStop(1, 'rgba(34, 211, 238, 0)');
+
+            // Format API dates
+            let labels = [];
+            let chartData = [];
+            
+            if (data.clicksByDate && data.clicksByDate.length > 0) {
+                labels = data.clicksByDate.map(d => new Date(d.date_val).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }));
+                chartData = data.clicksByDate.map(d => d.count);
+            } else {
+                labels = ['No Data Yet'];
+                chartData = [0];
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Link Clicks',
+                        data: chartData,
+                        fill: true,
+                        backgroundColor: gradient,
+                        borderColor: '#3b82f6',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        pointHoverBackgroundColor: '#3b82f6',
+                        pointHoverBorderColor: '#fff',
+                        pointHoverBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#1e293b', drawBorder: false }, ticks: { color: '#64748b' } },
+                        x: { grid: { display: false }, ticks: { color: '#64748b' } }
+                    }
+                }
+            });
+
+        } catch (err) {
+            console.error('Analytics Error:', err);
         }
-      }
     });
   </script>
 <!-- END: Footer Scripts -->
+<!-- BEGIN: Global User Profile Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token');
+        if (!token) return; // Silent return, let other scripts handle auth redirects if needed
+
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) { return null; }
+        }
+        const userPayload = parseJwt(token);
+        if (userPayload) {
+            const nameEl = document.getElementById('sidebar-user-name');
+            const emailEl = document.getElementById('sidebar-user-email');
+            if (nameEl) nameEl.textContent = userPayload.name;
+            if (emailEl) emailEl.textContent = userPayload.email;
+
+            const userPlan = userPayload.plan || 'Free';
+            const planEl = document.getElementById('sidebar-user-plan');
+            if (planEl) planEl.textContent = userPlan;
+
+            const plansModal = document.getElementById('plans-modal');
+            const openPlansBtn = document.getElementById('sidebar-open-plans-btn');
+            const closePlansModal = document.getElementById('close-plans-modal');
+            
+            if (openPlansBtn && plansModal) {
+                openPlansBtn.addEventListener('click', () => { plansModal.classList.remove('hidden'); });
+                closePlansModal.addEventListener('click', () => { plansModal.classList.add('hidden'); });
+                
+                const currentCard = document.getElementById('plan-card-' + userPlan);
+                if (currentCard) {
+                    currentCard.classList.add('border-emerald-500', 'bg-emerald-900/10');
+                    currentCard.classList.remove('border-slate-700', 'border-blue-500/30', 'border-purple-500/20', 'bg-slate-800/50', 'bg-blue-900/20', 'bg-purple-900/10', 'shadow-blue-500/10', 'shadow-lg');
+                    
+                    const btn = currentCard.querySelector('.plan-act-btn');
+                    if (btn) {
+                        btn.textContent = 'Current Plan';
+                        btn.className = 'plan-act-btn w-full py-2 rounded-lg font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/50 cursor-default shadow-none';
+                    }
+                }
+            }
+        }
+    });
+</script>
+<!-- END: Global User Profile Script -->
+<!-- BEGIN: Plans Modal -->
+<div id="plans-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl p-6 shadow-2xl relative flex flex-col max-h-[90vh]">
+        <button id="close-plans-modal" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors bg-slate-800 hover:bg-slate-700 rounded-full p-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <h2 class="text-2xl font-bold text-white mb-2 text-center">Subscription Plans</h2>
+        <p class="text-slate-400 text-center mb-8">Choose the perfect plan for your tracking needs.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-y-auto p-2">
+            <!-- Free Plan -->
+            <div id="plan-card-Free" class="bg-slate-800/50 border border-slate-700 rounded-xl p-6 flex flex-col relative transition-all">
+                <h3 class="text-xl font-bold text-white mb-1">Free</h3>
+                <p class="text-3xl font-bold text-white mb-4">$0<span class="text-sm font-normal text-slate-400">/mo</span></p>
+                <ul class="space-y-3 mb-8 flex-1">
+                    <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 50 Tracked Links</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-300"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Basic Click Counting</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> No Geographic Data</li>
+                </ul>
+                <button class="plan-act-btn w-full py-2 rounded-lg font-semibold bg-slate-700 hover:bg-slate-600 outline-none text-white transition-all">Select</button>
+            </div>
+            
+            <!-- Pro Plan -->
+            <div id="plan-card-Pro" class="bg-blue-900/20 border border-blue-500/30 rounded-xl p-6 flex flex-col relative transition-all shadow-lg shadow-blue-500/10">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Popular</div>
+                <h3 class="text-xl font-bold text-blue-400 mb-1">Pro</h3>
+                <p class="text-3xl font-bold text-white mb-4">$9<span class="text-sm font-normal text-slate-400">/mo</span></p>
+                <ul class="space-y-3 mb-8 flex-1">
+                    <li class="flex items-center gap-2 text-sm text-slate-200"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 5,000 Tracked Links</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-200"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Full Analytics Dashboard</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-200"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Geographic & Device Tracking</li>
+                </ul>
+                <button class="plan-act-btn w-full py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-all shadow-sm">Upgrade to Pro</button>
+            </div>
+            
+            <!-- Elite Plan -->
+            <div id="plan-card-Elite" class="bg-purple-900/10 border border-purple-500/20 rounded-xl p-6 flex flex-col relative transition-all">
+                <h3 class="text-xl font-bold text-purple-400 mb-1">Elite</h3>
+                <p class="text-3xl font-bold text-white mb-4">$29<span class="text-sm font-normal text-slate-400">/mo</span></p>
+                <ul class="space-y-3 mb-8 flex-1">
+                    <li class="flex items-center gap-2 text-sm text-slate-200"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Unlimited Tracked Links</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-200"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Priority Monitoring</li>
+                    <li class="flex items-center gap-2 text-sm text-slate-200"><svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Custom Domains</li>
+                </ul>
+                <button class="plan-act-btn w-full py-2 rounded-lg font-semibold bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-sm">Upgrade to Elite</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Plans Modal -->
 </body></html>
