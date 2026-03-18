@@ -25,7 +25,7 @@ app.use('/api/links', linkRoutes);
 app.use('/r', redirectRoutes);
 
 // Catch-all route for Single Page Application
-app.get('*', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
 });
 
