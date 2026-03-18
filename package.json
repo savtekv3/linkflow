@@ -1,0 +1,9 @@
+{
+  "name": "linktrack-production",
+  "version": "1.0.0",
+  "description": "Production Ready Full-Stack LinkTrack",
+  "scripts": {
+    "postinstall": "cd backend && npm install",
+    "start": "node backend/index.js"
+  }
+}

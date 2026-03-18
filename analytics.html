@@ -229,7 +229,7 @@
         if (!token) return;
 
         try {
-            const res = await fetch('http://localhost:3000/api/links/analytics', {
+            const res = await fetch('/api/links/analytics', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
