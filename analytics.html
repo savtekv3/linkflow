@@ -199,10 +199,12 @@
 <!-- END: Geographic Distribution -->
 <!-- BEGIN: Referrers List -->
 <section class="lg:col-span-3 bg-slate-900 rounded-xl border border-slate-800 p-6" data-purpose="referrers-traffic">
-<div class="flex items-center justify-between mb-6">
-<h2 class="text-lg font-semibold text-white">Device Distribution</h2>
-</div>
-<div class="overflow-x-auto">
+<button id="device-dist-toggle" class="w-full flex items-center justify-between mb-2 lg:mb-6 focus:outline-none group cursor-pointer lg:cursor-default">
+<h2 class="text-lg font-semibold text-white group-hover:text-blue-400 lg:group-hover:text-white transition-colors">Device Distribution</h2>
+<svg id="device-dist-icon" class="w-5 h-5 text-slate-400 group-hover:text-white transition-transform duration-300 transform lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+</button>
+<div id="device-dist-content" class="overflow-hidden transition-all duration-300 max-h-0 opacity-0 lg:max-h-[2000px] lg:opacity-100">
+<div class="overflow-x-auto pt-2 lg:pt-0">
 <table class="w-full text-left">
 <thead class="text-xs text-slate-500 uppercase border-b border-slate-800">
 <tr>
@@ -215,6 +217,7 @@
     <tr><td colspan="3" class="py-4 text-center text-sm text-slate-500">Loading devices...</td></tr>
 </tbody>
 </table>
+</div>
 </div>
 </section>
 <!-- END: Referrers List -->
@@ -450,6 +453,29 @@
             }
             mobileMenuBtn.addEventListener('click', toggleSidebar);
             mobileOverlay.addEventListener('click', toggleSidebar);
+        }
+
+        // --- Device Distribution Accordion ---
+        const distToggle = document.getElementById('device-dist-toggle');
+        const distContent = document.getElementById('device-dist-content');
+        const distIcon = document.getElementById('device-dist-icon');
+
+        if (distToggle && distContent && distIcon) {
+            distToggle.addEventListener('click', () => {
+                // Only act as accordion on mobile (<1024px)
+                if (window.innerWidth >= 1024) return;
+                
+                const isCollapsed = distContent.classList.contains('max-h-0');
+                if (isCollapsed) {
+                    distContent.classList.remove('max-h-0', 'opacity-0');
+                    distContent.classList.add('max-h-[2000px]', 'opacity-100');
+                    distIcon.classList.add('rotate-180');
+                } else {
+                    distContent.classList.add('max-h-0', 'opacity-0');
+                    distContent.classList.remove('max-h-[2000px]', 'opacity-100');
+                    distIcon.classList.remove('rotate-180');
+                }
+            });
         }
     });
 </script>
