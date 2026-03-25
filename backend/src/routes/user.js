@@ -15,6 +15,9 @@ router.put('/email', userController.updateEmail);
 // Update user password
 router.put('/password', userController.updatePassword);
 
+// Update user plan
+router.put('/plan', userController.updatePlan);
+
 // Delete user account
 router.delete('/', userController.deleteAccount);
 
