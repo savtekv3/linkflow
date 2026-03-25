@@ -89,3 +89,18 @@ exports.deleteAccount = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+exports.updatePlan = async (req, res) => {
+    try {
+        const { plan } = req.body;
+        if (!plan) {
+            return res.status(400).json({ error: 'Plan is required' });
+        }
+        
+        // Placeholder: Connect to a billing provider (Stripe/PayPal) here in the future
+        return res.status(501).json({ error: 'Plan upgrades are not implemented yet.' });
+    } catch (error) {
+        console.error('Error updating plan:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
